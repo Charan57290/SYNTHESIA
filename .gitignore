@@ -1,0 +1,31 @@
+# Common
+node_modules/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Frontend
+frontend/dist/
+frontend/.next/
+frontend/out/
+frontend/build/
+
+# Backend
+backend/uploads/
+backend/songs_to_import/
+backend/.logs/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+Project.zip

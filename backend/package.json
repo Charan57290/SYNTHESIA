@@ -4,10 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --test tests/*.test.js",
     "server": "nodemon server.js",
     "start": "node server.js",
-    "import-songs": "node bulk_import.js"
+    "import-songs": "node bulk_import.js",
+    "migrate": "node scripts/migrateDatabase.js",
+    "import-music": "node scripts/importMusicData.js",
+    "verify-db": "node scripts/verifyDatabase.js",
+    "perf-test": "node scripts/performanceTest.js"
   },
   "keywords": [],
   "author": "",

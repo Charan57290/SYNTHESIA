@@ -22,8 +22,17 @@ const Login = ({ closeAuth, openSignup }) => {
 
     const onLogin = async (event) => {
         event.preventDefault();
+        if (!data.email || !data.email.trim()) {
+            return toast.error("Please enter your email address");
+        }
+        if (!data.password) {
+            return toast.error("Please enter your password");
+        }
         try {
-            const response = await axios.post(`${url}/api/user/login`, data);
+            const response = await axios.post(`${url}/api/user/login`, {
+                email: data.email.trim().toLowerCase(),
+                password: data.password,
+            });
 
             if (response.data.success) {
                 localStorage.setItem("token", response.data.token);

@@ -22,8 +22,28 @@ const Signup = ({ closeAuth, openLogin }) => {
 
     const onSignup = async (event) => {
         event.preventDefault();
+
+        // Client-side validations
+        if (!data.name || data.name.trim().length < 2) {
+            return toast.error("Please enter a valid name (at least 2 characters)");
+        }
+        if (data.name.trim().length > 50) {
+            return toast.error("Name cannot exceed 50 characters");
+        }
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!data.email || !emailRegex.test(data.email.trim())) {
+            return toast.error("Please enter a valid email address");
+        }
+        if (!data.password || data.password.trim().length < 8) {
+            return toast.error("Password must be at least 8 characters long");
+        }
+
         try {
-            const response = await axios.post(`${url}/api/user/register`, data);
+            const response = await axios.post(`${url}/api/user/register`, {
+                name: data.name.trim(),
+                email: data.email.trim().toLowerCase(),
+                password: data.password,
+            });
 
             if (response.data.success) {
                 localStorage.setItem("token", response.data.token);

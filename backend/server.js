@@ -15,11 +15,20 @@ import { connectDB } from './config/db.js';
 // App Config
 const app = express();
 const port = process.env.PORT || 4000;
-connectDB();
 
 // Middlewares
 app.use(express.json());
 app.use(cors());
+
+// Ensure MongoDB connection before handling requests (critical for Vercel serverless cold-starts)
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+    } catch (err) {
+        console.error("Database connection error in request:", err);
+    }
+    next();
+});
 
 // Initializing Routes
 app.use("/api/song", songRouter);
@@ -35,6 +44,8 @@ app.get('/', (req, res) => {
     res.send("API Working");
 });
 
-app.listen(port, () => console.log(`Server started on ${port}`));
+if (!process.env.VERCEL) {
+    app.listen(port, () => console.log(`Server started on ${port}`));
+}
 
 export default app;
